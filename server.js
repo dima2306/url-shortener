@@ -8,6 +8,8 @@ app.listen(3000);
 app.set('view engine', 'ejs');
 // Middleware & static files
 app.use(express.static('public'));
+// Register morgan as logger
+app.use(morgan('dev'));
 
 // Base routes
 app.get('/', (req, res) => {
