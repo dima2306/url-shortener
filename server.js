@@ -1,10 +1,13 @@
 const express = require('express');
 const app = express();
+const morgan = require('morgan');
 
 // Listen to requests
 app.listen(3000);
 // Register view engine
 app.set('view engine', 'ejs');
+// Middleware & static files
+app.use(express.static('public'));
 
 // Base routes
 app.get('/', (req, res) => {
