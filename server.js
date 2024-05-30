@@ -4,6 +4,8 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const URL = require('./models/Url');
+const shortenUrlService = require('./services/ShortenUrlService');
 
 // Listen to requests
 app.listen(3000);
@@ -17,10 +19,21 @@ app.use(morgan('dev'));
 // Connect to MongoDB
 console.log('Connecting to MongoDB...');
 mongoose.connect(process.env.DB_URI)
-    .then(response => console.log('Connected to MongoDB.'))
+    .then(() => console.log('Connected to MongoDB.'))
     .catch(err => console.error(err));
 
 // Base routes
 app.get('/', (req, res) => {
     res.render('index');
+});
+
+app.get('/create', async (req, res) => {
+    const url = new URL({
+        originalUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
+        shortenedUrl: await shortenUrlService.shortenUrl(req.originalUrl),
+    });
+
+    url.save()
+        .then(response => res.status(201).send(response))
+        .catch(err => console.error(err));
 });
