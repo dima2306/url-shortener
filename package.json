@@ -1,7 +1,7 @@
 {
   "name": "url-shortener",
   "version": "1.0.0",
-  "description": "This is a test project to create a URL shortener using Node.js, Express, MongoDB, and Tailwind CSS.",
+  "description": "This is a test project to create a URL shortener project using Node.js, Express, MongoDB, and Tailwind CSS.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
