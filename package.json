@@ -1,7 +1,7 @@
 {
   "name": "url-shortener",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a test project to create a URL shortener using Node.js, Express, MongoDB, and Tailwind CSS.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -9,7 +9,7 @@
     "build": "npx tailwindcss -o public/dist/tailwind.css --minify"
   },
   "keywords": [],
-  "author": "",
+  "author": "Dimitri Simonishvili",
   "license": "ISC",
   "dependencies": {
     "autoprefixer": "^10.4.19",
