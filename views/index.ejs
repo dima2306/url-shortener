@@ -7,102 +7,102 @@
 <main class="container mx-auto px-4 py-8 items-center dark:text-gray-400">
     <h1 class="text-3xl text-center font-bold mb-4 pb-8">Welcome to the homepage</h1>
 
-        <form action="">
-            <div class="container max-w-screen-lg mx-auto">
-                <div class="bg-white rounded shadow-lg px-6 py-6 md:p-8 mb-6">
-                    <div class="grid gap-4 gap-y-2 grid-cols-1 lg:grid-cols-3 text-sm">
-                        <div class="text-gray-600 dark:text-gray-400">
-                            <h2 class="font-semibold text-xl text-gray-600">URL Shortening Form</h2>
-                            <p class="mb-4 leading-6 text-gray-600 dark:text-gray-400">
-                                Enter the <abbr title="Uniform Resource Locator">URL</abbr> you want to shorten
-                            </p>
-                        </div>
+    <form action="">
+        <div class="container max-w-screen-lg mx-auto">
+            <div class="bg-white rounded shadow-lg px-6 py-6 md:p-8 mb-6">
+                <div class="grid gap-4 gap-y-2 grid-cols-1 lg:grid-cols-3 text-sm">
+                    <div class="text-gray-600 dark:text-gray-400">
+                        <h2 class="font-semibold text-xl text-gray-600">URL Shortening Form</h2>
+                        <p class="mb-4 leading-6 text-gray-600 dark:text-gray-400">
+                            Enter the <abbr title="Uniform Resource Locator">URL</abbr> you want to shorten
+                        </p>
+                    </div>
 
-                        <div class="lg:col-span-2">
-                            <div class="grid gap-4 gap-y-2 grid-cols-1 md:grid-cols-5 text-sm">
-                                <div class="md:col-span-5">
-                                    <label for="url"
-                                           class="block text-sm font-medium leading-6 text-gray-900 mb-1 pl-1">
-                                        Original URL
-                                        <span class="text-rose-600">*</span>
-                                    </label>
-                                    <div class="flex rounded ring-1 ring-inset ring-gray-300 focus-within:ring-2
+                    <div class="lg:col-span-2">
+                        <div class="grid gap-4 gap-y-2 grid-cols-1 md:grid-cols-5 text-sm">
+                            <div class="md:col-span-5">
+                                <label for="url"
+                                       class="block text-sm font-medium leading-6 text-gray-900 mb-1 pl-1">
+                                    Original URL
+                                    <span class="text-rose-600">*</span>
+                                </label>
+                                <div class="flex rounded ring-1 ring-inset ring-gray-300 focus-within:ring-2
                                                 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
-                                    >
+                                >
                                         <span class="flex select-none items-center pl-3 text-gray-500">
                                             https://
                                         </span>
-                                        <input type="url" name="url" id="url" autocomplete="url"
-                                               class="form-input h-10 px-4 w-full block flex-1 border-0 focus:ring-0
+                                    <input type="url" name="url" id="url" autocomplete="url"
+                                           class="form-input h-10 px-4 w-full block flex-1 border-0 focus:ring-0
                                                   bg-transparent pl-1"
-                                               placeholder="example.com"
-                                        />
-                                    </div>
+                                           placeholder="example.com"
+                                    />
                                 </div>
+                            </div>
 
-                                <div class="md:col-span-5">
-                                    <label for="expiration"
-                                           class="block text-sm font-medium leading-6 text-gray-900 mb-1 pl-1">
-                                        Expiration Date
-                                    </label>
-                                    <div class="flex rounded ring-1 ring-inset ring-gray-300 focus-within:ring-2
+                            <div class="md:col-span-5">
+                                <label for="expiration"
+                                       class="block text-sm font-medium leading-6 text-gray-900 mb-1 pl-1">
+                                    Expiration Date
+                                </label>
+                                <div class="flex rounded ring-1 ring-inset ring-gray-300 focus-within:ring-2
                                                 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
-                                    >
-                                        <input type="date" name="expiration" id="expiration"
-                                               autocomplete="expiration"
-                                               class="form-input h-10 px-4 w-full block flex-1 border-0 focus:ring-0
+                                >
+                                    <input type="date" name="expiration" id="expiration"
+                                           autocomplete="expiration"
+                                           class="form-input h-10 px-4 w-full block flex-1 border-0 focus:ring-0
                                                   bg-transparent pl-1"
-                                               placeholder="example.com"
-                                        />
-                                    </div>
+                                           placeholder="example.com"
+                                    />
                                 </div>
+                            </div>
 
-                                <div class="md:col-span-5">
-                                    <!-- Another variant of switch. Left for the reference -->
-                                    <!--<label for="visibility"-->
-                                    <!--       class="font-medium leading-6 text-gray-900 inline-flex items-center gap-2-->
-                                    <!--       cursor-pointer">-->
-                                    <!--    <input type="checkbox" name="visibility" id="visibility"-->
-                                    <!--           autocomplete="visibility"-->
-                                    <!--           class="sr-only peer"-->
+                            <div class="md:col-span-5">
+                                <!-- Another variant of switch. Left for the reference -->
+                                <!--<label for="visibility"-->
+                                <!--       class="font-medium leading-6 text-gray-900 inline-flex items-center gap-2-->
+                                <!--       cursor-pointer">-->
+                                <!--    <input type="checkbox" name="visibility" id="visibility"-->
+                                <!--           autocomplete="visibility"-->
+                                <!--           class="sr-only peer"-->
 
-                                    <!--    <span class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none-->
-                                    <!--                peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800-->
-                                    <!--                rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full-->
-                                    <!--                rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white-->
-                                    <!--                after:content-[''] after:absolute after:top-[2px] after:start-[2px]-->
-                                    <!--                after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5-->
-                                    <!--                after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">-->
+                                <!--    <span class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none-->
+                                <!--                peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800-->
+                                <!--                rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full-->
+                                <!--                rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white-->
+                                <!--                after:content-[''] after:absolute after:top-[2px] after:start-[2px]-->
+                                <!--                after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5-->
+                                <!--                after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">-->
 
-                                    <!--    </span>-->
-                                    <!--    <span class="text-xs">Visibility</span>-->
-                                    <!--</label>-->
+                                <!--    </span>-->
+                                <!--    <span class="text-xs">Visibility</span>-->
+                                <!--</label>-->
 
-                                    <label for="visibility"
-                                           class="font-medium leading-6 text-gray-900 inline-block relative items-center gap-2
+                                <label for="visibility"
+                                       class="font-medium leading-6 text-gray-900 inline-block relative items-center gap-2
                                            cursor-pointer">
-                                        <input type="checkbox" name="visibility" id="visibility"
-                                               autocomplete="visibility"
-                                               class="switch"
-                                        />
-                                        <span class="text-xs">Visibility</span>
-                                    </label>
-                                </div>
+                                    <input type="checkbox" name="visibility" id="visibility"
+                                           autocomplete="visibility"
+                                           class="switch"
+                                    />
+                                    <span class="text-xs">Visibility</span>
+                                </label>
+                            </div>
 
-                                <div class="md:col-span-5 text-right mt-5">
-                                    <button type="submit"
-                                            class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold
+                            <div class="md:col-span-5 text-right mt-5">
+                                <button type="submit"
+                                        class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold
                                                    py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                    >
-                                        Shorten URL
-                                    </button>
-                                </div>
+                                >
+                                    Shorten URL
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
+    </form>
 </main>
 
 <%- include('_partials/footer.ejs') %>
