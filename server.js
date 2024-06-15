@@ -8,8 +8,8 @@ const URL = require('./models/Url');
 const shortenUrlService = require('./services/ShortenUrlService');
 const helpers = require('./helpers/helper')
 
-// Listen to requests
-app.listen(3000);
+const port = process.env.PORT || 3000;
+
 // Register view engine
 app.set('view engine', 'ejs');
 // Middleware & static files
@@ -18,10 +18,12 @@ app.use(express.static('public'));
 app.use(morgan('dev'));
 
 // Connect to MongoDB
-console.log('Connecting to MongoDB...');
-mongoose.connect(process.env.DB_URI)
-    .then(() => console.log('Connected to MongoDB.'))
-    .catch(err => console.error(err));
+console.log('Connecting to MongoDB...')
+mongoose.connect(process.env.DB_URI).then(() => {
+    console.log('Connected to MongoDB.')
+    // Listen to requests
+    app.listen(port, () => console.log(`Server is running on port ${port}.`))
+}).catch(err => console.error(err))
 
 // Base routes
 app.get('/', (req, res) => {
