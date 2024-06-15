@@ -7,7 +7,7 @@
 <main class="container mx-auto items-center px-4 py-8 dark:text-gray-400">
     <h1 class="mb-4 pb-8 text-center text-3xl font-bold">Welcome to the homepage</h1>
 
-    <form action="">
+    <form action="/create">
         <div class="container mx-auto max-w-screen-lg">
             <div class="mb-6 rounded bg-white px-6 py-6 shadow-lg md:p-8">
                 <div class="grid grid-cols-1 gap-4 gap-y-2 text-sm lg:grid-cols-3">
@@ -20,6 +20,9 @@
 
                     <div class="lg:col-span-2">
                         <div class="grid grid-cols-1 gap-4 gap-y-2 text-sm md:grid-cols-5">
+                            <div class="mb-5 hidden general__errors md:col-span-5">
+                                <output class="rounded bg-red-600 p-2 text-gray-200"></output>
+                            </div>
                             <div class="md:col-span-5">
                                 <label for="originalUrl"
                                        class="mb-1 block pl-1 text-sm font-medium leading-6 text-gray-900">
@@ -104,5 +107,33 @@
 </main>
 
 <%- include('_partials/footer.ejs') %>
+<script>
+  let form = document.querySelector('form')
+  const output = document.querySelector('output')
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    clearErrors();
+    const params = new FormData(form)
+
+    fetch(form.action, {
+      method: 'POST',
+      body: params,
+    }).then(response => response.json()).then(response => {
+      if (response.data.type === 'error') {
+        let errorMessage = document.querySelector('.general__errors')
+        errorMessage.classList.remove('hidden')
+        errorMessage.querySelector('output').innerHTML = response.data.message
+      }
+    }).catch(err => console.error(err))
+  })
+
+  function clearErrors () {
+    let errorMessage = document.querySelector('.general__errors')
+    errorMessage.classList.add('hidden')
+    errorMessage.querySelector('output').innerHTML = ''
+  }
+</script>
 </body>
 </html>

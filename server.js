@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const URL = require('./models/Url');
 const shortenUrlService = require('./services/ShortenUrlService');
+const helpers = require('./helpers/helper')
 
 // Listen to requests
 app.listen(3000);
@@ -27,7 +28,11 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get('/create', async (req, res) => {
+app.post('/create', async (req, res) => {
+    if (helpers.isObjectEmpty(req.query)) {
+        res.status(400).json({data: {type: 'error', message: 'Request is empty. Please fill the required fields.'}});
+    }
+
     const url = new URL({
         originalUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
         shortenedUrl: await shortenUrlService.shortenUrl(req.originalUrl),
