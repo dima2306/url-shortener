@@ -1,14 +1,13 @@
 require('dotenv').config();
 
 const express = require('express');
+const PORT = process.env.PORT || 3000;
 const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const URL = require('./models/Url');
 const shortenUrlService = require('./services/ShortenUrlService');
 const helpers = require('./helpers/helper')
-
-const port = process.env.PORT || 3000;
 
 // Register view engine
 app.set('view engine', 'ejs');
@@ -22,7 +21,7 @@ console.log('Connecting to MongoDB...')
 mongoose.connect(process.env.DB_URI).then(() => {
     console.log('Connected to MongoDB.')
     // Listen to requests
-    app.listen(port, () => console.log(`Server is running on port ${port}.`))
+    app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`))
 }).catch(err => console.error(err))
 
 // Base routes
