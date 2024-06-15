@@ -48,9 +48,16 @@ app.post('/create', upload.none(), async (req, res) => {
         res.status(400).json({ data: { type: 'error', message: 'Original URL is required.' } })
     }
 
+    let originalUrl = req.body.originalUrl;
+    let shortenedUrl = await shortenUrlService.shortenUrl(originalUrl);
+    let expiration = new Date(req.body.expiration) || null;
+    let visibility = req.body.visibility === 'on';
+
     const url = new URL({
-        originalUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
-        shortenedUrl: await shortenUrlService.shortenUrl(req.originalUrl),
+        originalUrl: originalUrl,
+        shortenedUrl: shortenedUrl,
+        expiration: expiration,
+        visibility: visibility,
     });
 
     url.save()
