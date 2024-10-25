@@ -44,11 +44,14 @@ app.use(flash());
 
 // Connect to MongoDB
 console.log('Connecting to MongoDB...');
-mongoose.connect(process.env.DB_URI).then(() => {
+mongoose.connect(process.env.DB_URI, {useUnifiedTopology: true}).then(() => {
   console.log('Connected to MongoDB.');
   // Listen to requests
   app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
-}).catch(err => console.error(err));
+}).catch(err => {
+  console.error(err);
+  process.exit(1); // Exit on connection error
+});
 
 // Base routes
 app.get('/', (req, res) => {
