@@ -2,14 +2,15 @@ require('dotenv').config();
 
 const express = require('express');
 const ejs = require('ejs');
-const PORT = Number.parseInt(process.env.PORT) || 3000;
-const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const multer = require('multer');
-const upload = multer();
 const session = require('express-session');
 const flash = require('connect-flash');
+
+const PORT = Number.parseInt(process.env.PORT) || 3000;
+const app = express();
+const upload = multer();
 
 const URL = require('./models/Url');
 const shortenUrlService = require('./services/ShortenUrlService');
