@@ -22,16 +22,13 @@ if (!process.env.DB_URI || !process.env.APP_SESSION_SECRET) {
   process.exit(1); // Exit the process with failure
 }
 
-// Register view engine
-app.set('view engine', 'ejs');
-// Middleware & static files
-app.use(express.static('public'));
-// Register morgan as logger
-app.use(morgan('dev'));
+app.set('view engine', 'ejs'); // Register view engine
+app.use(express.static('public')); // Middleware & static files
+app.use(morgan('dev')); // Register morgan as logger
+app.use(express.json()); // Parse JSON bodies
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 app.locals.helpers = helpers;
-
-// app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
   resave: false,
