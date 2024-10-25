@@ -28,7 +28,7 @@ app.use(express.static('public')); // Middleware & static files
 app.use(morgan('dev')); // Register morgan as logger
 app.use(helmet()); // Enhance security with helmet
 app.use(express.json()); // Parse JSON bodies
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+app.use(express.urlencoded({extended: true})); // Parse URL-encoded bodies
 
 app.locals.helpers = helpers;
 
@@ -128,5 +128,5 @@ app.post('/create', upload.none(), async (req, res) => {
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
+  res.status(500).json({message: 'Something went wrong!'});
 });
