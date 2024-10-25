@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const session = require('express-session');
 const flash = require('connect-flash');
+const helmet = require('helmet'); // Security middleware
 
 const PORT = Number.parseInt(process.env.PORT) || 3000;
 const app = express();
@@ -25,6 +26,7 @@ if (!process.env.DB_URI || !process.env.APP_SESSION_SECRET) {
 app.set('view engine', 'ejs'); // Register view engine
 app.use(express.static('public')); // Middleware & static files
 app.use(morgan('dev')); // Register morgan as logger
+app.use(helmet()); // Enhance security with helmet
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
