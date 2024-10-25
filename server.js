@@ -19,6 +19,7 @@ app.use(express.static('public'));
 app.use(morgan('dev'));
 
 app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 // Connect to MongoDB
 console.log('Connecting to MongoDB...')
 mongoose.connect(process.env.DB_URI).then(() => {
