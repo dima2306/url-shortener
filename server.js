@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const ejs = require('ejs');
 const PORT = Number.parseInt(process.env.PORT) || 3000;
 const app = express();
 const morgan = require('morgan');
@@ -65,7 +66,16 @@ app.post('/create', upload.none(), async (req, res) => {
     }
 
     if (req.body.originalUrl === '') {
-        res.status(400).json({ data: { type: 'error', message: 'Original URL is required.' } })
+        req.flash('messageBag', [{ type: 'error', message: 'Original URL is required.' }]);
+
+        ejs.renderFile('views/_partials/flash_message.ejs', {
+            messages: req.flash('messageBag'),
+            helpers: app.locals.helpers,
+        }, (err, str) => {
+            if (err) console.error(err);
+            res.status(400).json({ type: 'error', data: str });
+        });
+        return;
     }
 
     let originalUrl = req.body.originalUrl;

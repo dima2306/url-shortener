@@ -124,10 +124,9 @@
       method: 'POST',
       body: params,
     }).then(response => response.json()).then(response => {
-      if (response.data.type === 'error') {
+      if (response.type === 'error') {
         let errorMessage = document.querySelector('.general__errors')
-        errorMessage.classList.remove('hidden')
-        errorMessage.querySelector('output').innerHTML = response.data.message
+        errorMessage.insertAdjacentHTML('beforebegin', response.data)
       }
     }).catch(err => console.error(err))
   })
@@ -135,7 +134,9 @@
   function clearErrors () {
     let errorMessage = document.querySelector('.general__errors')
     errorMessage.classList.add('hidden')
-    errorMessage.querySelector('output').innerHTML = ''
+    if (errorMessage.previousElementSibling) {
+      errorMessage.previousElementSibling.remove();
+    }
   }
 </script>
 </body>
