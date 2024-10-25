@@ -7,6 +7,9 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const upload = multer();
+const session = require('express-session');
+const flash = require('connect-flash');
+
 const URL = require('./models/Url');
 const shortenUrlService = require('./services/ShortenUrlService');
 const helpers = require('./helpers/helper')
@@ -21,6 +24,19 @@ app.use(morgan('dev'));
 app.locals.helpers = helpers;
 
 // app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+    resave: false,
+    saveUninitialized: true,
+    secret: process.env.APP_SESSION_SECRET,
+    // cookie: {
+    //     secure: true,
+    //     maxAge: 60000,
+    //     expires: new Date(Date.now() + 60000),
+    // },
+}));
+app.use(flash());
+
 // Connect to MongoDB
 console.log('Connecting to MongoDB...')
 mongoose.connect(process.env.DB_URI).then(() => {
@@ -31,7 +47,9 @@ mongoose.connect(process.env.DB_URI).then(() => {
 
 // Base routes
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', {
+        messages: req.flash('messageBag'),
+    });
 });
 
 // upload.none() is a middleware function that processes the FormData but does not handle any files.
