@@ -46,7 +46,7 @@ app.use(flash());
 
 // Connect to MongoDB
 console.log('Connecting to MongoDB...');
-mongoose.connect(process.env.DB_URI, {useUnifiedTopology: true}).then(() => {
+mongoose.connect(process.env.DB_URI).then(() => {
   console.log('Connected to MongoDB.');
   // Listen to requests
   app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
