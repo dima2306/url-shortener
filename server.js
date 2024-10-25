@@ -56,41 +56,51 @@ app.get('/', (req, res) => {
 // upload.none() is a middleware function that processes the FormData but does not handle any files.
 // The processed data is stored in req.body.
 app.post('/create', upload.none(), async (req, res) => {
-    if (helpers.isObjectEmpty(req.body)) {
-        res.status(400).json({
-            data: {
-                type: 'error',
-                message: 'Request is empty. Please fill the required fields.',
-            },
-        })
-    }
+    const { originalUrl, expiration, visibility } = req.body;
 
-    if (req.body.originalUrl === '') {
-        req.flash('messageBag', [{ type: 'error', message: 'Original URL is required.' }]);
-
-        ejs.renderFile('views/_partials/flash_message.ejs', {
-            messages: req.flash('messageBag'),
-            helpers: app.locals.helpers,
-        }, (err, str) => {
-            if (err) console.error(err);
-            res.status(400).json({ type: 'error', data: str });
+    // Helper function to render flash messages
+    const renderFlashMessage = (messageBag, statusCode) => {
+        req.flash('messageBag', messageBag);
+        return new Promise((resolve, reject) => {
+            ejs.renderFile('views/_partials/flash_message.ejs', {
+                messages: req.flash('messageBag'),
+                helpers: app.locals.helpers,
+            }, (err, str) => {
+                if (err) {
+                    console.error(err);
+                    return reject(err);
+                }
+                resolve({ type: 'error', data: str });
+            });
         });
-        return;
+    };
+
+    try {
+        if (helpers.isObjectEmpty(req.body)) {
+            const errorMessage = [{ type: 'error', message: 'Request is empty. Please fill the required fields.' }];
+            const response = await renderFlashMessage(errorMessage, 400);
+            return res.status(400).json(response);
+        }
+
+        if (!originalUrl) {
+            const errorMessage = [{ type: 'error', message: 'Original URL is required.' }];
+            const response = await renderFlashMessage(errorMessage, 400);
+            return res.status(400).json(response);
+        }
+
+        const shortenedUrl = await shortenUrlService.shortenUrl(originalUrl);
+        const urlData = {
+            originalUrl,
+            shortenedUrl,
+            expiration: expiration ? new Date(expiration) : null,
+            visibility: visibility === 'on',
+        };
+
+        const url = new URL(urlData);
+        const savedUrl = await url.save();
+        return res.status(201).json(savedUrl);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ type: 'error', message: 'Internal Server Error' });
     }
-
-    let originalUrl = req.body.originalUrl;
-    let shortenedUrl = await shortenUrlService.shortenUrl(originalUrl);
-    let expiration = new Date(req.body.expiration) || null;
-    let visibility = req.body.visibility === 'on';
-
-    const url = new URL({
-        originalUrl: originalUrl,
-        shortenedUrl: shortenedUrl,
-        expiration: expiration,
-        visibility: visibility,
-    });
-
-    url.save()
-        .then(response => res.status(201).send(response))
-        .catch(err => console.error(err));
 });
