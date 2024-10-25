@@ -16,6 +16,12 @@ const URL = require('./models/Url');
 const shortenUrlService = require('./services/ShortenUrlService');
 const helpers = require('./helpers/helper');
 
+// Validate required environment variables
+if (!process.env.DB_URI || !process.env.APP_SESSION_SECRET) {
+  console.error('Missing required environment variables: DB_URI, APP_SESSION_SECRET');
+  process.exit(1); // Exit the process with failure
+}
+
 // Register view engine
 app.set('view engine', 'ejs');
 // Middleware & static files
