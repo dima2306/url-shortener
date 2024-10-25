@@ -18,7 +18,8 @@ app.use(express.static('public'));
 // Register morgan as logger
 app.use(morgan('dev'));
 
-app.use(express.urlencoded({ extended: true }));
+app.locals.helpers = helpers;
+
 // app.use(express.urlencoded({ extended: true }));
 // Connect to MongoDB
 console.log('Connecting to MongoDB...')
