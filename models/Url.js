@@ -14,6 +14,7 @@ const urlSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Shortened URL is required'],
         unique: true,
+        index: true,
     },
     visibility: {
         type: Boolean,
