@@ -13,7 +13,7 @@ const PORT = Number.parseInt(process.env.PORT) || 3000;
 const app = express();
 const upload = multer();
 
-const URL = require('./models/Url');
+const UrlModel = require('./models/Url');
 const shortenUrlService = require('./services/ShortenUrlService');
 const helpers = require('./helpers/helper');
 
@@ -115,7 +115,7 @@ app.post('/create', upload.none(), async (req, res) => {
       visibility: visibility === 'on',
     };
 
-    const url = new URL(urlData);
+    const url = new UrlModel(urlData);
     const savedUrl = await url.save();
     return res.status(201).json(savedUrl);
   } catch (err) {
