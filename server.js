@@ -116,8 +116,16 @@ app.post('/create', upload.none(), async (req, res) => {
     };
 
     const url = new UrlModel(urlData);
-    const savedUrl = await url.save();
-    return res.status(201).json(savedUrl);
+    await url.save();
+
+    req.flash('messageBag', [
+      {
+        type: 'success',
+        message: 'URL has been shortened successfully.',
+      },
+    ]);
+
+    return res.redirect('/');
   } catch (err) {
     console.error(err);
     return res.status(500).
