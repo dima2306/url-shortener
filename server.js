@@ -19,7 +19,9 @@ const helpers = require('./helpers/helper');
 
 // Validate required environment variables
 if (!process.env.DB_URI || !process.env.APP_SESSION_SECRET) {
-  console.error('Missing required environment variables: DB_URI, APP_SESSION_SECRET');
+  console.error(
+      'Missing required environment variables: DB_URI, APP_SESSION_SECRET',
+  );
   process.exit(1); // Exit the process with failure
 }
 
@@ -128,8 +130,8 @@ app.post('/create', upload.none(), async (req, res) => {
     return res.redirect('/');
   } catch (err) {
     console.error(err);
-    return res.status(500).
-        json({type: 'error', message: 'Internal Server Error'});
+    return res.status(500)
+        .json({type: 'error', message: 'Internal Server Error'});
   }
 });
 

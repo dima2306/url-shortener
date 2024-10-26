@@ -7,25 +7,25 @@ module.exports = {
    *
    * @link https://stackoverflow.com/a/32108184
    */
-  isObjectEmpty: function (object) {
+  isObjectEmpty: function(object) {
     for (const prop in object) {
       if (Object.hasOwn(object, prop)) {
-        return false
+        return false;
       }
     }
 
-    return true
+    return true;
   },
 
   /**
    * @param string
    * @returns {string}
    */
-  capitalizeFirstLetter: function (string) {
-    if (! string) {
+  capitalizeFirstLetter: function(string) {
+    if (!string) {
       return '';
     }
 
-    return string.charAt(0).toUpperCase() + string.slice(1)
-  }
-}
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  },
+};
