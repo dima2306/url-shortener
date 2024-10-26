@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server.js",
     "dev": "postcss public/tailwind.css -o public/dist/tailwind.css --watch & nodemon server.js",
-    "build": "npx tailwindcss -o public/dist/tailwind.css --minify"
+    "build": "npx tailwindcss -o public/dist/tailwind.css --minify",
+    "postinstall": "node copy-env.js"
   },
   "keywords": [],
   "author": "Dimitri Simonishvili",
