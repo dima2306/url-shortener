@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+// Vendor requirements
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
@@ -7,13 +8,14 @@ const multer = require('multer');
 const session = require('express-session');
 const flash = require('connect-flash');
 const helmet = require('helmet'); // Security middleware
+
+// Local requirements
+const helpers = require('./helpers/helper');
 const UrlController = require('./controllers/UrlController');
 
 const PORT = Number.parseInt(process.env.PORT) || 3000;
 const app = express();
 const upload = multer();
-
-const helpers = require('./helpers/helper');
 
 // Validate required environment variables
 if (!process.env.DB_URI || !process.env.APP_SESSION_SECRET) {
