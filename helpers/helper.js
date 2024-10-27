@@ -28,4 +28,20 @@ module.exports = {
 
     return string.charAt(0).toUpperCase() + string.slice(1);
   },
+
+  /**
+   * Function to get today's date in YYYY-MM-DD format considering a timezone offset
+   *
+   * @param timezoneOffset
+   * @returns {string}
+   */
+  getTodayDate: function(timezoneOffset = 0) {
+    const today = new Date();
+    // Calculate the local date by adding the timezone offset in milliseconds
+    const localDate = new Date(
+        today.getTime() + (timezoneOffset * 60 * 60 * 1000),
+    );
+
+    return localDate.toISOString().split('T')[0]; // Return in YYYY-MM-DD format
+  },
 };
