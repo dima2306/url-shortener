@@ -1,20 +1,18 @@
 require('dotenv').config();
 
 const express = require('express');
-const ejs = require('ejs');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const session = require('express-session');
 const flash = require('connect-flash');
 const helmet = require('helmet'); // Security middleware
+const UrlController = require('./controllers/UrlController');
 
 const PORT = Number.parseInt(process.env.PORT) || 3000;
 const app = express();
 const upload = multer();
 
-const UrlModel = require('./models/Url');
-const shortenUrlService = require('./services/ShortenUrlService');
 const helpers = require('./helpers/helper');
 
 // Validate required environment variables
@@ -66,74 +64,7 @@ app.get('/', (req, res) => {
 
 // upload.none() is a middleware function that processes the FormData but does not handle any files.
 // The processed data is stored in req.body.
-app.post('/create', upload.none(), async (req, res) => {
-  const {originalUrl, expiration, visibility} = req.body;
-
-  // Helper function to render flash messages
-  const renderFlashMessage = (messageBag, statusCode) => {
-    req.flash('messageBag', messageBag);
-    return new Promise((resolve, reject) => {
-      ejs.renderFile('views/_partials/flash_message.ejs', {
-        messages: req.flash('messageBag'),
-        helpers: app.locals.helpers,
-      }, (err, str) => {
-        if (err) {
-          console.error(err);
-          return reject(err);
-        }
-        resolve({type: 'error', data: str});
-      });
-    });
-  };
-
-  try {
-    if (helpers.isObjectEmpty(req.body)) {
-      const errorMessage = [
-        {
-          type: 'error',
-          message: 'Request is empty. Please fill the required fields.',
-        },
-      ];
-      const response = await renderFlashMessage(errorMessage, 400);
-      return res.status(400).json(response);
-    }
-
-    if (!originalUrl) {
-      const errorMessage = [
-        {
-          type: 'error',
-          message: 'Original URL is required.',
-        },
-      ];
-      const response = await renderFlashMessage(errorMessage, 400);
-      return res.status(400).json(response);
-    }
-
-    const shortenedUrl = await shortenUrlService.shortenUrl(originalUrl);
-    const urlData = {
-      originalUrl,
-      shortenedUrl,
-      expiration: expiration ? new Date(expiration) : null,
-      visibility: visibility === 'on',
-    };
-
-    const url = new UrlModel(urlData);
-    await url.save();
-
-    req.flash('messageBag', [
-      {
-        type: 'success',
-        message: 'URL has been shortened successfully.',
-      },
-    ]);
-
-    return res.redirect('/');
-  } catch (err) {
-    console.error(err);
-    return res.status(500)
-        .json({type: 'error', message: 'Internal Server Error'});
-  }
-});
+app.post('/create', upload.none(), UrlController.store);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
