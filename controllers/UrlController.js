@@ -8,7 +8,7 @@ async function store(req, res) {
   const {originalUrl, expiration, visibility} = req.body;
 
   // Helper function to render flash messages
-  const renderFlashMessage = (messageBag, statusCode) => {
+  const renderFlashMessage = (messageBag, statusCode, type) => {
     req.flash('messageBag', messageBag);
     return new Promise((resolve, reject) => {
       ejs.renderFile('views/_partials/flash_message.ejs', {
@@ -19,7 +19,7 @@ async function store(req, res) {
           console.error(err);
           return reject(err);
         }
-        resolve({type: 'error', code: statusCode, data: str});
+        resolve({type: type, code: statusCode, data: str});
       });
     });
   };
@@ -32,7 +32,7 @@ async function store(req, res) {
           message: 'Request is empty. Please fill the required fields.',
         },
       ];
-      const response = await renderFlashMessage(errorMessage, 400);
+      const response = await renderFlashMessage(errorMessage, 400, 'error');
       return res.status(response.code).json(response);
     }
 
@@ -43,7 +43,7 @@ async function store(req, res) {
           message: 'Original URL is required.',
         },
       ];
-      const response = await renderFlashMessage(errorMessage, 400);
+      const response = await renderFlashMessage(errorMessage, 400, 'error');
       return res.status(response.code).json(response);
     }
 
@@ -55,7 +55,7 @@ async function store(req, res) {
         },
       ];
 
-      const response = await renderFlashMessage(errorMessage, 400);
+      const response = await renderFlashMessage(errorMessage, 400, 'error');
       return res.status(response.code).json(response);
     }
 
@@ -77,7 +77,7 @@ async function store(req, res) {
       },
     ]);
 
-    let response = await renderFlashMessage(message, 201);
+    let response = await renderFlashMessage(message, 201, 'success');
 
     return res.status(response.code).json(response);
   } catch (err) {
