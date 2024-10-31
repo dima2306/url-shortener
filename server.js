@@ -4,7 +4,6 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const multer = require('multer');
 const session = require('express-session');
 const flash = require('connect-flash');
 const helmet = require('helmet'); // Security middleware
@@ -12,10 +11,10 @@ const helmet = require('helmet'); // Security middleware
 // Local requirements
 const helpers = require('./helpers/helper');
 const UrlController = require('./controllers/UrlController');
+const urlRoutes = require('./routes/urlRoutes');
 
 const PORT = Number.parseInt(process.env.PORT) || 3000;
 const app = express();
-const upload = multer();
 
 // Validate required environment variables
 if (!process.env.DB_URI || !process.env.APP_SESSION_SECRET) {
@@ -67,9 +66,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// upload.none() is a middleware function that processes the FormData but does not handle any files.
-// The processed data is stored in req.body.
-app.post('/create', upload.none(), UrlController.store);
+app.use('/url', urlRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
