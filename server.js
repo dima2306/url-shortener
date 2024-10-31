@@ -28,9 +28,12 @@ if (!process.env.DB_URI || !process.env.APP_SESSION_SECRET) {
 app.set('view engine', 'ejs'); // Register view engine
 app.use(express.static('public')); // Middleware & static files
 app.use(morgan('dev')); // Register morgan as logger
-app.use(helmet()); // Enhance security with helmet
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({extended: true})); // Parse URL-encoded bodies
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(helmet()); // Enhance security with helmet
+}
 
 app.locals.helpers = helpers;
 
