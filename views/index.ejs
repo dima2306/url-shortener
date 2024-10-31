@@ -14,7 +14,7 @@
                     <% if (messages.length > 0) { %>
                         <%- include('_partials/flash_message', { messages: messages }) %>
                     <% } %>
-                    <div class="mb-5 hidden general__errors md:col-span-5">
+                    <div class="mb-5 hidden alert__messages md:col-span-5">
                         <output class="rounded bg-red-600 p-2 text-gray-200"></output>
                     </div>
                     <div class="text-gray-600 dark:text-gray-400">
@@ -128,18 +128,16 @@
       method: 'POST',
       body: params,
     }).then(response => response.json()).then(response => {
-      if (response.type === 'error') {
-        let errorMessage = document.querySelector('.general__errors')
-        errorMessage.insertAdjacentHTML('beforebegin', response.data)
-      }
+      let selector = document.querySelector('.alert__messages');
+      selector.insertAdjacentHTML('beforebegin', response.data);
     }).catch(err => console.error(err))
   })
 
   function clearErrors() {
-    let errorMessage = document.querySelector('.general__errors')
-    errorMessage.classList.add('hidden')
-    if (errorMessage.previousElementSibling) {
-      errorMessage.previousElementSibling.remove();
+    let selector = document.querySelector('.alert__messages')
+    selector.classList.add('hidden')
+    if (selector.previousElementSibling) {
+      selector.previousElementSibling.remove();
     }
   }
 </script>
