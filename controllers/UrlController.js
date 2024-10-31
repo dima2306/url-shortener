@@ -2,6 +2,7 @@ const ejs = require('ejs');
 const helpers = require('../helpers/helper');
 const shortenUrlService = require('../services/ShortenUrlService');
 const UrlModel = require('../models/Url');
+const {getTodayDate} = require('../helpers/helper');
 
 async function store(req, res) {
   const {originalUrl, expiration, visibility} = req.body;
@@ -32,7 +33,7 @@ async function store(req, res) {
         },
       ];
       const response = await renderFlashMessage(errorMessage, 400);
-      return res.status(400).json(response);
+      return res.status(response.code).json(response);
     }
 
     if (!originalUrl) {
@@ -43,7 +44,19 @@ async function store(req, res) {
         },
       ];
       const response = await renderFlashMessage(errorMessage, 400);
-      return res.status(400).json(response);
+      return res.status(response.code).json(response);
+    }
+
+    if (expiration < getTodayDate(4)) {
+      const errorMessage = [
+        {
+          type: 'error',
+          message: 'Expiration date must not be in past.',
+        },
+      ];
+
+      const response = await renderFlashMessage(errorMessage, 400);
+      return res.status(response.code).json(response);
     }
 
     const shortenedUrl = await shortenUrlService.shortenUrl(originalUrl);
