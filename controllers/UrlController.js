@@ -70,12 +70,12 @@ async function store(req, res) {
     const url = new UrlModel(urlData);
     await url.save();
 
-    let message = req.flash('messageBag', [
+    let message = [
       {
         type: 'success',
         message: 'URL has been shortened successfully.',
       },
-    ]);
+    ];
 
     let response = await renderFlashMessage(message, 201, 'success');
 
