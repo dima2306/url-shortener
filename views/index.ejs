@@ -1,128 +1,119 @@
-<!doctype html>
-<html lang="en">
-<%- include('_partials/head.ejs') %>
-<body class="bg-gray-100 text-gray-800 dark:bg-gray-700">
-<%- include('_partials/header.ejs') %>
+<h1 class="mb-4 pb-8 text-center text-3xl font-bold">Welcome to the homepage</h1>
 
-<main class="container mx-auto items-center px-4 py-8 dark:text-gray-400">
-    <h1 class="mb-4 pb-8 text-center text-3xl font-bold">Welcome to the homepage</h1>
+<form action="url/create" method="POST">
+    <div class="container mx-auto max-w-screen-lg">
+        <div class="mb-6 rounded bg-white px-6 py-6 shadow-lg md:p-8">
+            <div class="grid grid-cols-1 gap-4 gap-y-2 text-sm lg:grid-cols-3">
+                <% if (messages.length > 0) { %>
+                    <%- include('_partials/flash_message', { messages: messages }) %>
+                <% } %>
+                <div class="mb-5 hidden alert__messages md:col-span-5">
+                    <output class="rounded bg-red-600 p-2 text-gray-200"></output>
+                </div>
+                <div class="text-gray-600 dark:text-gray-400">
+                    <h2 class="text-xl font-semibold text-gray-600">URL Shortening Form</h2>
+                    <p class="mb-4 leading-6 text-gray-600 dark:text-gray-400">
+                        Enter the <abbr title="Uniform Resource Locator">URL</abbr> you want to shorten
+                    </p>
+                </div>
 
-    <form action="url/create" method="POST">
-        <div class="container mx-auto max-w-screen-lg">
-            <div class="mb-6 rounded bg-white px-6 py-6 shadow-lg md:p-8">
-                <div class="grid grid-cols-1 gap-4 gap-y-2 text-sm lg:grid-cols-3">
-                    <% if (messages.length > 0) { %>
-                        <%- include('_partials/flash_message', { messages: messages }) %>
-                    <% } %>
-                    <div class="mb-5 hidden alert__messages md:col-span-5">
-                        <output class="rounded bg-red-600 p-2 text-gray-200"></output>
-                    </div>
-                    <div class="text-gray-600 dark:text-gray-400">
-                        <h2 class="text-xl font-semibold text-gray-600">URL Shortening Form</h2>
-                        <p class="mb-4 leading-6 text-gray-600 dark:text-gray-400">
-                            Enter the <abbr title="Uniform Resource Locator">URL</abbr> you want to shorten
-                        </p>
-                    </div>
-
-                    <div class="lg:col-span-2">
-                        <div class="grid grid-cols-1 gap-4 gap-y-2 text-sm md:grid-cols-5">
-                            <div class="md:col-span-5">
-                                <label for="originalUrl"
-                                       class="mb-1 block pl-1 text-sm font-medium leading-6 text-gray-900">
-                                    Original URL
-                                    <span class="text-rose-600">*</span>
-                                </label>
-                                <div class="flex rounded ring-1 ring-inset ring-gray-300 focus-within:ring-2
+                <div class="lg:col-span-2">
+                    <div class="grid grid-cols-1 gap-4 gap-y-2 text-sm md:grid-cols-5">
+                        <div class="md:col-span-5">
+                            <label for="originalUrl"
+                                   class="mb-1 block pl-1 text-sm font-medium leading-6 text-gray-900">
+                                Original URL
+                                <span class="text-rose-600">*</span>
+                            </label>
+                            <div class="flex rounded ring-1 ring-inset ring-gray-300 focus-within:ring-2
                                                 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
-                                >
+                            >
                                         <span class="flex select-none items-center pl-3 text-gray-500">
                                             https://
                                         </span>
-                                    <input type="url" name="originalUrl" id="originalUrl" autocomplete="originalUrl"
-                                           class="form-input h-10 px-4 w-full block flex-1 border-0 focus:ring-0
+                                <input type="url" name="originalUrl" id="originalUrl" autocomplete="originalUrl"
+                                       class="form-input h-10 px-4 w-full block flex-1 border-0 focus:ring-0
                                                   bg-transparent pl-1"
-                                           placeholder="example.com"
-                                           aria-label="Original URL"
-                                    />
-                                </div>
+                                       placeholder="example.com"
+                                       aria-label="Original URL"
+                                />
                             </div>
+                        </div>
 
-                            <div class="md:col-span-5">
-                                <label for="expiration"
-                                       class="mb-1 block pl-1 text-sm font-medium leading-6 text-gray-900">
-                                    Expiration Date
-                                </label>
-                                <div class="flex rounded ring-1 ring-inset ring-gray-300 focus-within:ring-2
+                        <div class="md:col-span-5">
+                            <label for="expiration"
+                                   class="mb-1 block pl-1 text-sm font-medium leading-6 text-gray-900">
+                                Expiration Date
+                            </label>
+                            <div class="flex rounded ring-1 ring-inset ring-gray-300 focus-within:ring-2
                                                 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
-                                >
-                                    <input type="date" name="expiration" id="expiration"
-                                           autocomplete="expiration"
-                                           min="<%= helpers.getTodayDate(4) %>"
-                                           class="form-input h-10 px-4 w-full block flex-1 border-0 focus:ring-0
+                            >
+                                <input type="date" name="expiration" id="expiration"
+                                       autocomplete="expiration"
+                                       min="<%= helpers.getTodayDate(4) %>"
+                                       class="form-input h-10 px-4 w-full block flex-1 border-0 focus:ring-0
                                                   bg-transparent pl-1"
-                                           aria-label="Expiration Date"
-                                    />
-                                </div>
+                                       aria-label="Expiration Date"
+                                />
                             </div>
+                        </div>
 
-                            <div class="md:col-span-5">
-                                <!-- Another variant of switch. Left for the reference -->
-                                <!--<label for="visibility"-->
-                                <!--       class="font-medium leading-6 text-gray-900 inline-flex items-center gap-2-->
-                                <!--       cursor-pointer">-->
-                                <!--    <input type="checkbox" name="visibility" id="visibility"-->
-                                <!--           autocomplete="visibility"-->
-                                <!--           class="sr-only peer"-->
+                        <div class="md:col-span-5">
+                            <!-- Another variant of switch. Left for the reference -->
+                            <!--<label for="visibility"-->
+                            <!--       class="font-medium leading-6 text-gray-900 inline-flex items-center gap-2-->
+                            <!--       cursor-pointer">-->
+                            <!--    <input type="checkbox" name="visibility" id="visibility"-->
+                            <!--           autocomplete="visibility"-->
+                            <!--           class="sr-only peer"-->
 
-                                <!--    <span class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none-->
-                                <!--                peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800-->
-                                <!--                rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full-->
-                                <!--                rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white-->
-                                <!--                after:content-[''] after:absolute after:top-[2px] after:start-[2px]-->
-                                <!--                after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5-->
-                                <!--                after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">-->
+                            <!--    <span class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none-->
+                            <!--                peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800-->
+                            <!--                rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full-->
+                            <!--                rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white-->
+                            <!--                after:content-[''] after:absolute after:top-[2px] after:start-[2px]-->
+                            <!--                after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5-->
+                            <!--                after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">-->
 
-                                <!--    </span>-->
-                                <!--    <span class="text-xs">Visibility</span>-->
-                                <!--</label>-->
+                            <!--    </span>-->
+                            <!--    <span class="text-xs">Visibility</span>-->
+                            <!--</label>-->
 
-                                <label for="visibility"
-                                       class="font-medium leading-6 text-gray-900 inline-block relative items-center gap-2
+                            <label for="visibility"
+                                   class="font-medium leading-6 text-gray-900 inline-block relative items-center gap-2
                                            cursor-pointer">
-                                    <input type="checkbox" name="visibility" id="visibility"
-                                           class="switch"
-                                           aria-label="Visibility"
-                                    />
-                                    <span class="text-xs">Visibility</span>
-                                </label>
-                            </div>
+                                <input type="checkbox" name="visibility" id="visibility"
+                                       class="switch"
+                                       aria-label="Visibility"
+                                />
+                                <span class="text-xs">Visibility</span>
+                            </label>
+                        </div>
 
-                            <div class="mt-5 text-right md:col-span-5">
-                                <button type="submit"
-                                        class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold
+                        <div class="mt-5 text-right md:col-span-5">
+                            <button type="submit"
+                                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold
                                                py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                >
-                                    Shorten URL
-                                </button>
-                            </div>
+                            >
+                                Shorten URL
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
-</main>
+    </div>
+</form>
 
-<%- include('_partials/footer.ejs') %>
 <script>
-  let form = document.querySelector('form')
-  const output = document.querySelector('output')
+  let form = document.querySelector('form');
+  const output = document.querySelector('output');
 
   form.addEventListener('submit', (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     clearErrors();
-    const params = new FormData(form)
+    const params = new FormData(form);
 
     fetch(form.action, {
       method: 'POST',
@@ -130,16 +121,14 @@
     }).then(response => response.json()).then(response => {
       let selector = document.querySelector('.alert__messages');
       selector.insertAdjacentHTML('beforebegin', response.data);
-    }).catch(err => console.error(err))
-  })
+    }).catch(err => console.error(err));
+  });
 
   function clearErrors() {
-    let selector = document.querySelector('.alert__messages')
-    selector.classList.add('hidden')
+    let selector = document.querySelector('.alert__messages');
+    selector.classList.add('hidden');
     if (selector.previousElementSibling) {
       selector.previousElementSibling.remove();
     }
   }
 </script>
-</body>
-</html>

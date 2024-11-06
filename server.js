@@ -61,7 +61,8 @@ mongoose.connect(process.env.DB_URI).then(() => {
 
 // Base routes
 app.get('/', (req, res) => {
-  res.render('index', {
+  res.render('layout', {
+    content: 'index',
     messages: req.flash('messageBag'),
   });
 });
