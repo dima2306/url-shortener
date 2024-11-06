@@ -1,7 +1,8 @@
-const express = require('express');
-const UrlController = require('../controllers/UrlController');
+const {Router} = require('express');
+const router = Router();
 const multer = require('multer');
-const router = express.Router();
+
+const UrlController = require('../controllers/UrlController');
 const upload = multer();
 
 // upload.none() is a middleware function that processes the FormData but does not handle any files.
