@@ -16,6 +16,8 @@ router.post('/register', registerUserRules, (req, res, next) => {
       content: 'auth/register',
       errors: errors.array(),
       oldInput: req.body,
+    }, function(err, html) {
+      res.status(422).send(html);
     });
   }
   next();
