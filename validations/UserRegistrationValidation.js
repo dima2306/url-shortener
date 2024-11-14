@@ -13,6 +13,7 @@ const registerUserRules = [
 
   body('email')
     .escape().trim()
+    .normalizeEmail()
     .notEmpty().withMessage('Email is required.')
     .isEmail().withMessage('Invalid email address.'),
 
