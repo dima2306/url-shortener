@@ -12,6 +12,7 @@ const helmet = require('helmet'); // Security middleware
 const helpers = require('./helpers/helper');
 const UrlController = require('./controllers/UrlController');
 const urlRoutes = require('./routes/urlRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const PORT = Number.parseInt(process.env.PORT) || 3000;
 const app = express();
@@ -68,6 +69,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/url', urlRoutes);
+app.use('/auth', authRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
