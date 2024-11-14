@@ -21,6 +21,10 @@ const registerUserRules = [
     .notEmpty().withMessage('Password is required.')
     .isLength({min: 8}).withMessage('Password is too short.'),
 
+  body('terms')
+    .equals('on')
+    .withMessage('You must agree to the terms and conditions.'),
+
 ];
 
 module.exports = registerUserRules;
