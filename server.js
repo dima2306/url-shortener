@@ -10,7 +10,6 @@ const helmet = require('helmet'); // Security middleware
 
 // Local requirements
 const helpers = require('./helpers/helper');
-const UrlController = require('./controllers/UrlController');
 const urlRoutes = require('./routes/urlRoutes');
 const authRoutes = require('./routes/authRoutes');
 
