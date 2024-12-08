@@ -21,13 +21,9 @@ function createRegister(req, res) {
 }
 
 function storeRegister(req, res) {
-  console.log(req.body);
-
   const data = matchedData(req);
-
-  console.log(data);
-
   const user = new userModel(data);
+
   user.save();
 
   res.redirect(201, '/');
