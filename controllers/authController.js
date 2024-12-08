@@ -1,4 +1,5 @@
 const {matchedData} = require('express-validator');
+const userModel = require('../models/User');
 
 function createLogin(req, res) {
   res.render('layout', {content: 'auth/login'});
@@ -26,7 +27,10 @@ function storeRegister(req, res) {
 
   console.log(data);
 
-  res.send('Registering...');
+  const user = new userModel(data);
+  user.save();
+
+  res.redirect(201, '/');
 }
 
 module.exports = {
