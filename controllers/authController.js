@@ -1,5 +1,6 @@
 const {matchedData} = require('express-validator');
 const userModel = require('../models/User');
+const jwt = require('../services/GenerateJwtToken');
 
 function createLogin(req, res) {
   res.render('layout', {content: 'auth/login'});
@@ -25,6 +26,11 @@ function storeRegister(req, res) {
   const user = new userModel(data);
 
   user.save();
+
+  res.cookie('jwt', jwt.generateJwtToken(user._id), {
+    httpOnly: true,
+    maxAge: jwt.maxAge,
+  });
 
   req.flash('messageBag', [
     {
