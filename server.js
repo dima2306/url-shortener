@@ -25,6 +25,7 @@ if (!process.env.DB_URI || !process.env.APP_SESSION_SECRET) {
   process.exit(1); // Exit the process with failure
 }
 
+// Middlewares
 app.set('view engine', 'ejs'); // Register view engine
 app.use(express.static('public')); // Middleware & static files
 app.use(morgan('dev')); // Register morgan as logger
