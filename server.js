@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const flash = require('connect-flash');
 const helmet = require('helmet'); // Security middleware
+const cookieParser = require('cookie-parser');
 
 // Local requirements
 const helpers = require('./helpers/helper');
@@ -29,6 +30,7 @@ app.use(express.static('public')); // Middleware & static files
 app.use(morgan('dev')); // Register morgan as logger
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({extended: true})); // Parse URL-encoded bodies
+app.use(cookieParser()); // Parse cookies
 
 if (process.env.NODE_ENV === 'production') {
   app.use(helmet()); // Enhance security with helmet
@@ -71,6 +73,22 @@ app.get('/terms-and-conditions', (req, res) => {
   res.render('layout', {
     content: 'terms_conditions',
   });
+});
+
+app.get('/set-cookies', (req, res) => {
+  res.cookie('guest', true, {
+    maxAge: 60000,
+    expires: new Date(Date.now() + 60000),
+    // httpOnly: true,
+  }).send('cookie set');
+});
+
+app.get('/get-cookies', (req, res) => {
+  const cookies = req.cookies;
+
+  console.log(cookies);
+
+  res.json(cookies);
 });
 
 app.use('/url', urlRoutes);
