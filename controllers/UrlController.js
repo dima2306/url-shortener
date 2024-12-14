@@ -3,26 +3,10 @@ const helpers = require('../helpers/helper');
 const shortenUrlService = require('../services/ShortenUrlService');
 const UrlModel = require('../models/Url');
 const {getTodayDate} = require('../helpers/helper');
+const flashMessageRenderer = require('../helpers/flashMessageRenderer');
 
 async function store(req, res) {
   const {originalUrl, expiration, visibility} = req.body;
-
-  // Helper function to render flash messages
-  const renderFlashMessage = (messageBag, statusCode, type) => {
-    req.flash('messageBag', messageBag);
-    return new Promise((resolve, reject) => {
-      ejs.renderFile('views/_partials/flash_message.ejs', {
-        messages: req.flash('messageBag'),
-        helpers: helpers,
-      }, (err, str) => {
-        if (err) {
-          console.error(err);
-          return reject(err);
-        }
-        resolve({type: type, code: statusCode, data: str});
-      });
-    });
-  };
 
   try {
     if (helpers.isObjectEmpty(req.body)) {
@@ -32,7 +16,7 @@ async function store(req, res) {
           message: 'Request is empty. Please fill the required fields.',
         },
       ];
-      const response = await renderFlashMessage(errorMessage, 400, 'error');
+      const response = await flashMessageRenderer(req, errorMessage, 400, 'error');
       return res.status(response.code).json(response);
     }
 
@@ -43,7 +27,7 @@ async function store(req, res) {
           message: 'Original URL is required.',
         },
       ];
-      const response = await renderFlashMessage(errorMessage, 400, 'error');
+      const response = await flashMessageRenderer(req, errorMessage, 400, 'error');
       return res.status(response.code).json(response);
     }
 
@@ -55,7 +39,7 @@ async function store(req, res) {
         },
       ];
 
-      const response = await renderFlashMessage(errorMessage, 400, 'error');
+      const response = await flashMessageRenderer(req, errorMessage, 400, 'error');
       return res.status(response.code).json(response);
     }
 
@@ -77,7 +61,7 @@ async function store(req, res) {
       },
     ];
 
-    let response = await renderFlashMessage(message, 201, 'success');
+    let response = await flashMessageRenderer(req, message, 201, 'success');
 
     return res.status(response.code).json(response);
   } catch (err) {
