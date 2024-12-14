@@ -67,6 +67,12 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/terms-and-conditions', (req, res) => {
+  res.render('layout', {
+    content: 'terms_conditions',
+  });
+});
+
 app.use('/url', urlRoutes);
 app.use('/auth', authRoutes);
 
