@@ -26,7 +26,14 @@ function storeRegister(req, res) {
 
   user.save();
 
-  res.redirect(201, '/');
+  req.flash('messageBag', [
+    {
+      type: 'success',
+      message: 'User registered successfully',
+    },
+  ]);
+
+  res.redirect('/');
 }
 
 module.exports = {
