@@ -13,12 +13,12 @@ router.get('/login', authController.createLogin);
 // because the authUserRules middleware expects the request body to be
 // parsed as form data, and we use FormDara on the frontend.
 router.post('/login', upload.none(), authUserRules, (req, res, next) => {
-  console.log('authRoutes errors', req.body);
   const errors = validationResult(req);
-  console.log('errors empty', errors.isEmpty());
+
   if (!errors.isEmpty()) {
-    res.status(422).send({errors: errors.array()});
+    res.status(422).send({ errors: errors.array() });
   }
+
   next();
 }, authController.storeLogin);
 
