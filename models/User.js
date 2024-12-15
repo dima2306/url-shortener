@@ -48,8 +48,6 @@ userSchema.statics.login = async function(user, password) {
 userSchema.statics.loginUsingEmail = async function(email, password) {
   const user = await this.findOne({email});
 
-  console.log('loginEmail', user);
-
   if (user === undefined || user === null) {
     throw new Error('User not found');
   }
