@@ -7,10 +7,9 @@ function createLogin(req, res) {
 }
 
 function storeLogin(req, res) {
-  const {email, password, remember} = req.body;
+  const data = matchedData(req);
 
-  console.log(email, password, remember);
-  res.send('Logging in...');
+  res.json({response: 'Logging in...'});
 }
 
 function createRegister(req, res) {

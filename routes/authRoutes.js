@@ -1,12 +1,26 @@
 const {Router} = require('express');
 const authController = require('../controllers/authController');
 const registerUserRules = require('../validations/UserRegistrationValidation');
+const authUserRules = require('../validations/UserAuthenticationValidation');
 const {validationResult} = require('express-validator');
+const multer = require('multer');
 
 const router = Router();
+const upload = multer();
 
 router.get('/login', authController.createLogin);
-router.post('/login', authController.storeLogin);
+// We need to pass the multer upload.none() middleware to the route handler
+// because the authUserRules middleware expects the request body to be
+// parsed as form data, and we use FormDara on the frontend.
+router.post('/login', upload.none(), authUserRules, (req, res, next) => {
+  console.log('authRoutes errors', req.body);
+  const errors = validationResult(req);
+  console.log('errors empty', errors.isEmpty());
+  if (!errors.isEmpty()) {
+    res.status(422).send({errors: errors.array()});
+  }
+  next();
+}, authController.storeLogin);
 
 router.get('/register', authController.createRegister);
 router.post('/register', registerUserRules, (req, res, next) => {
