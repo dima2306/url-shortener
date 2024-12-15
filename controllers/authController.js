@@ -6,10 +6,21 @@ function createLogin(req, res) {
   res.render('layout', {content: 'auth/login'});
 }
 
-function storeLogin(req, res) {
+async function storeLogin(req, res) {
   const data = matchedData(req);
 
-  res.json({response: 'Logging in...'});
+  try {
+    const user = await userModel.loginUsingEmail(data.email, data.password);
+    res.status(200)
+      .json({
+        success: true,
+        message: 'User logged in successfully',
+      });
+  } catch (error) {
+    console.error('storeLogin error', error);
+    res.status(401)
+      .json({success: false, message: error.message});
+  }
 }
 
 function createRegister(req, res) {
