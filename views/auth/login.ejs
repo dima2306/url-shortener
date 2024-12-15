@@ -16,6 +16,9 @@
                                placeholder="name@company.com"
                                required
                         />
+                        <small class="text-red-700 dark:text-red-500 hidden" role="alert">
+                            Please check your credentials.
+                        </small>
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
@@ -62,6 +65,8 @@
   form.addEventListener('submit', async e => {
     e.preventDefault();
 
+    clearErrors();
+
     const formData = new FormData(form);
 
     const response = await fetch('/auth/login', {
@@ -75,6 +80,20 @@
       window.location.href = '/';
     }
 
-    console.log('frontend error', data.errors);
+    document.querySelector('#email')
+      .classList.add('bg-red-50', 'border-red-500', 'text-red-900', 'placeholder-red-700', 'focus:ring-red-500', 'focus:border-red-500', 'dark:bg-red-100', 'dark:border-red-400', 'dark:text-gray-900', 'dark:placeholder-gray-500', 'dark:focus:ring-gray-500', 'dark:focus:border-red-500');
+    document.querySelector('#email + small').classList.remove('hidden');
+
+    document.querySelector('#password')
+      .classList.add('bg-red-50', 'border-red-500', 'text-red-900', 'placeholder-red-700', 'focus:ring-red-500', 'focus:border-red-500', 'dark:bg-red-100', 'dark:border-red-400', 'dark:text-gray-900', 'dark:placeholder-gray-500', 'dark:focus:ring-gray-500', 'dark:focus:border-red-500');
   });
+
+  function clearErrors() {
+    document.querySelector('#email')
+      .classList.remove('bg-red-50', 'border-red-500', 'text-red-900', 'placeholder-red-700', 'focus:ring-red-500', 'focus:border-red-500', 'dark:bg-red-100', 'dark:border-red-400', 'dark:text-gray-900', 'dark:placeholder-gray-500', 'dark:focus:ring-gray-500', 'dark:focus:border-red-500');
+    document.querySelector('#email + small').classList.add('hidden');
+
+    document.querySelector('#password')
+      .classList.remove('bg-red-50', 'border-red-500', 'text-red-900', 'placeholder-red-700', 'focus:ring-red-500', 'focus:border-red-500', 'dark:bg-red-100', 'dark:border-red-400', 'dark:text-gray-900', 'dark:placeholder-gray-500', 'dark:focus:ring-gray-500', 'dark:focus:border-red-500');
+  }
 </script>
