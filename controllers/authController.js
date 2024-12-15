@@ -11,6 +11,12 @@ async function storeLogin(req, res) {
 
   try {
     const user = await userModel.loginUsingEmail(data.email, data.password);
+
+    res.cookie('jwt', jwt.generateJwtToken(user._id), {
+      httpOnly: true,
+      maxAge: jwt.maxAge,
+    });
+
     res.status(200)
       .json({
         success: true,
