@@ -37,4 +37,6 @@ router.post('/register', registerUserRules, (req, res, next) => {
   next();
 }, authController.storeRegister);
 
+router.get('/logout', authController.logOut)
+
 module.exports = router;

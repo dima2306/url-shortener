@@ -61,9 +61,18 @@ function storeRegister(req, res) {
   res.redirect('/');
 }
 
+function logOut(req, res) {
+  res.clearCookie('jwt');
+  req.session.isGuest = true;
+  req.session.user = null;
+
+  res.redirect('/');
+}
+
 module.exports = {
   createLogin,
   storeLogin,
   createRegister,
   storeRegister,
+  logOut,
 };
