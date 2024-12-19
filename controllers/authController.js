@@ -3,7 +3,10 @@ const userModel = require('../models/User');
 const jwt = require('../services/GenerateJwtToken');
 
 function createLogin(req, res) {
-  res.render('layout', {content: 'auth/login'});
+  res.render('layout', {
+    content: 'auth/login',
+    messages: req.flash('messageBag'),
+  });
 }
 
 async function storeLogin(req, res) {
