@@ -25,6 +25,18 @@ if (!process.env.DB_URI || !process.env.APP_SESSION_SECRET) {
   process.exit(1); // Exit the process with failure
 }
 
+app.use(session({
+  resave: false,
+  saveUninitialized: true,
+  secret: process.env.APP_SESSION_SECRET,
+  // cookie: {
+  //     secure: true,
+  //     maxAge: 60000,
+  //     expires: new Date(Date.now() + 60000),
+  // },
+}));
+app.use(flash());
+
 // Middlewares
 app.set('view engine', 'ejs'); // Register view engine
 app.use(express.static('public')); // Middleware & static files
@@ -38,18 +50,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.locals.helpers = helpers;
-
-app.use(session({
-  resave: false,
-  saveUninitialized: true,
-  secret: process.env.APP_SESSION_SECRET,
-  // cookie: {
-  //     secure: true,
-  //     maxAge: 60000,
-  //     expires: new Date(Date.now() + 60000),
-  // },
-}));
-app.use(flash());
 
 // Connect to MongoDB
 console.log('Connecting to MongoDB...');
