@@ -70,6 +70,15 @@ app.get('/', (req, res) => {
   });
 });
 
+app.use('/url', urlRoutes);
+app.use('/auth', authRoutes)
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({message: 'Something went wrong!'});
+});
+
 app.get('/terms-and-conditions', (req, res) => {
   res.render('layout', {
     content: 'terms_conditions',
@@ -90,13 +99,4 @@ app.get('/get-cookies', (req, res) => {
   console.log(cookies);
 
   res.json(cookies);
-});
-
-app.use('/url', urlRoutes);
-app.use('/auth', authRoutes);
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({message: 'Something went wrong!'});
 });
