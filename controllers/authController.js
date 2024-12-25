@@ -44,11 +44,11 @@ function createRegister(req, res) {
   });
 }
 
-function storeRegister(req, res) {
+async function storeRegister(req, res) {
   const data = matchedData(req);
   const user = new userModel(data);
 
-  user.save();
+  await user.save();
 
   res.cookie('jwt', jwt.generateJwtToken(user._id), {
     httpOnly: true,
