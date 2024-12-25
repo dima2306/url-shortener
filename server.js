@@ -8,6 +8,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const helmet = require('helmet'); // Security middleware
 const cookieParser = require('cookie-parser');
+const checkJWT = require('./middlewares/checkJWTMiddleware');
 
 // Local requirements
 const helpers = require('./helpers/helper');
@@ -62,11 +63,17 @@ mongoose.connect(process.env.DB_URI).then(() => {
   process.exit(1); // Exit on connection error
 });
 
+// Here we are using the middleware to set the isGuest and userId
+// properties on the request object.
+app.use(checkJWT);
+
 // Base routes
 app.get('/', (req, res) => {
   res.render('layout', {
     content: 'index',
     messages: req.flash('messageBag'),
+    isGuest: req.isGuest,
+    user: req.user,
   });
 });
 
