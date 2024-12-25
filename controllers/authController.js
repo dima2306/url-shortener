@@ -67,8 +67,8 @@ function storeRegister(req, res) {
 
 function logOut(req, res) {
   res.clearCookie('jwt');
-  req.session.isGuest = true;
-  req.session.user = null;
+  req.isGuest = true;
+  req.user = null;
 
   res.redirect('/');
 }
