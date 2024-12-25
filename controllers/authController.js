@@ -6,6 +6,8 @@ function createLogin(req, res) {
   res.render('layout', {
     content: 'auth/login',
     messages: req.flash('messageBag'),
+    isGuest:req.isGuest,
+    user: req.user,
   });
 }
 
@@ -35,6 +37,8 @@ async function storeLogin(req, res) {
 function createRegister(req, res) {
   res.render('layout', {
     content: 'auth/register',
+    isGuest: req.isGuest,
+    user: req.user,
     errors: [],
     oldInput: {},
   });
