@@ -9,6 +9,7 @@ const flash = require('connect-flash');
 const helmet = require('helmet'); // Security middleware
 const cookieParser = require('cookie-parser');
 const checkJWT = require('./middlewares/checkJWTMiddleware');
+const authMiddleware = require('./middlewares/authMiddleware');
 
 // Local requirements
 const helpers = require('./helpers/helper');
@@ -86,9 +87,13 @@ app.use((err, req, res, next) => {
   res.status(500).json({message: 'Something went wrong!'});
 });
 
+app.use(authMiddleware);
+
 app.get('/terms-and-conditions', (req, res) => {
   res.render('layout', {
     content: 'terms_conditions',
+    isGuest: req.isGuest,
+    user: req.user,
   });
 });
 
