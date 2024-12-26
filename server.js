@@ -81,6 +81,14 @@ app.get('/', (req, res) => {
 app.use('/url', urlRoutes);
 app.use('/auth', authRoutes)
 
+app.get('/about', (req, res) => {
+  res.render('layout', {
+    content: 'about',
+    isGuest: req.isGuest,
+    user: req.user,
+  });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
