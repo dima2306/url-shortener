@@ -11,7 +11,7 @@ const upload = multer();
 router.get('/login', authController.createLogin);
 // We need to pass the multer upload.none() middleware to the route handler
 // because the authUserRules middleware expects the request body to be
-// parsed as form data, and we use FormDara on the frontend.
+// parsed as form data, and we use FormData on the frontend.
 router.post('/login', upload.none(), authUserRules, (req, res, next) => {
   const errors = validationResult(req);
 
