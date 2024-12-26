@@ -4,14 +4,6 @@
             <a href="/" class="text-3xl font-bold"><%= process.env.APP_NAME %></a>
         </div>
         <div class="h-full w-full flex-col items-center self-end py-1 pb-4 dark:text-gray-400 sm:w-auto">
-            <a href="#"
-               class="w-full px-3 py-2 text-center text-lg font-bold no-underline hover:text-gray-400 dark:hover:text-gray-300">
-                About
-            </a>
-            <a href="#"
-               class="w-full px-3 py-2 text-center text-lg font-bold no-underline hover:text-gray-400 dark:hover:text-gray-300">
-                Contact
-            </a>
             <% if(!!isGuest || typeof isGuest === 'undefined') { %>
                 <a href="/auth/login"
                    class="w-full px-3 py-2 text-center text-lg font-bold no-underline hover:text-gray-400 dark:hover:text-gray-300">
