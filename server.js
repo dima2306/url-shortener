@@ -45,7 +45,7 @@ app.set('view engine', 'ejs'); // Register view engine
 app.use(express.static('public')); // Middleware & static files
 app.use(morgan('dev')); // Register morgan as logger
 app.use(express.json()); // Parse JSON bodies
-app.use(express.urlencoded({extended: true})); // Parse URL-encoded bodies
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(cookieParser()); // Parse cookies
 
 if (process.env.NODE_ENV === 'production') {
@@ -80,7 +80,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/url', urlRoutes);
-app.use('/auth', authRoutes)
+app.use('/auth', authRoutes);
 app.use('/contact', contactRoutes);
 
 app.get('/about', (req, res) => {
@@ -94,7 +94,7 @@ app.get('/about', (req, res) => {
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({message: 'Something went wrong!'});
+  res.status(500).json({ message: 'Something went wrong!' });
 });
 
 app.use(authMiddleware);
