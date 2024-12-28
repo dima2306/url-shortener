@@ -13,10 +13,10 @@ const generateJwtToken = id => {
     throw new Error('APP_SESSION_SECRET environment variable is not set');
   }
 
-  return jwt.sign({id}, process.env.APP_SESSION_SECRET, {
+  return jwt.sign({ id }, process.env.APP_SESSION_SECRET, {
     expiresIn: maxAge,
   });
-}
+};
 
 module.exports = {
   maxAge,

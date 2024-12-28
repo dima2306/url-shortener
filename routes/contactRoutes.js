@@ -26,7 +26,7 @@ router.post('/', contactRules, (req, res, next) => {
       isGuest: req.isGuest,
       user: req.user,
       errors: errors.array(),
-      oldInput:req.body,
+      oldInput: req.body,
     }, function(err, html) {
       res.status(422).send(html);
     });

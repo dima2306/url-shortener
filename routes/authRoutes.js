@@ -1,8 +1,8 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const authController = require('../controllers/authController');
 const registerUserRules = require('../validations/UserRegistrationValidation');
 const authUserRules = require('../validations/UserAuthenticationValidation');
-const {validationResult} = require('express-validator');
+const { validationResult } = require('express-validator');
 const multer = require('multer');
 
 const router = Router();
@@ -37,6 +37,6 @@ router.post('/register', registerUserRules, (req, res, next) => {
   next();
 }, authController.storeRegister);
 
-router.get('/logout', authController.logOut)
+router.get('/logout', authController.logOut);
 
 module.exports = router;

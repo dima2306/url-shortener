@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     minLength: 8,
   },
-}, {timestamps: true});
+}, { timestamps: true });
 
 userSchema.pre('save', async function(next) {
   const salt = await bcrypt.genSalt();
@@ -36,7 +36,7 @@ userSchema.pre('save', async function(next) {
 
 userSchema.statics.login = async function(user, password) {
   return bcrypt.compare(password, user.password);
-}
+};
 
 /**
  * Authenticate a user using an email and a password
@@ -46,18 +46,18 @@ userSchema.statics.login = async function(user, password) {
  * @returns {Promise<*>}
  */
 userSchema.statics.loginUsingEmail = async function(email, password) {
-  const user = await this.findOne({email});
+  const user = await this.findOne({ email });
 
   if (user === undefined || user === null) {
     throw new Error('User not found');
   }
 
-  if (! await this.login(user, password)) {
+  if (!await this.login(user, password)) {
     throw new Error('Credentials are incorrect');
   }
 
   return user;
-}
+};
 
 const User = mongoose.model('User', userSchema);
 

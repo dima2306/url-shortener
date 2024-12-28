@@ -1,13 +1,12 @@
 <header>
     <nav class="flex w-full flex-col items-center justify-between bg-white px-4 py-1 shadow dark:border-gray-600 dark:bg-gray-800 sm:flex-row">
         <div class="flex w-full flex-row flex-nowrap items-center justify-between self-start dark:text-gray-400 sm:w-auto">
-            <a href="/" class="text-3xl font-bold"><%= process.env.APP_NAME %></a>
+            <a href="/" class="text-3xl font-bold"><%= process.env.APP_NAME; %></a>
         </div>
         <div class="h-full w-full flex-col items-center self-end py-1 pb-4 dark:text-gray-400 sm:w-auto">
             <% if(!isGuest) { %>
-                <span
-                   class="w-full px-3 py-2 text-center text-lg font-bold no-underline hover:text-gray-400 dark:hover:text-gray-300">
-                    Welcome <%- user.name %>
+                <span class="w-full px-3 py-2 text-center text-lg font-bold no-underline hover:text-gray-400 dark:hover:text-gray-300">
+                    Welcome <%- user.name; %>
                 </span>
             <% } %>
             <% if(!!isGuest || typeof isGuest === 'undefined') { %>

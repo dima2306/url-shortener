@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {isURL} = require('validator');
+const { isURL } = require('validator');
 
 const urlSchema = new mongoose.Schema({
   originalUrl: {
@@ -26,7 +26,7 @@ const urlSchema = new mongoose.Schema({
     required: false,
     default: null,
   },
-}, {timestamps: true});
+}, { timestamps: true });
 
 const UrlModel = mongoose.model('URL', urlSchema);
 

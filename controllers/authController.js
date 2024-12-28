@@ -1,4 +1,4 @@
-const {matchedData} = require('express-validator');
+const { matchedData } = require('express-validator');
 const userModel = require('../models/User');
 const jwt = require('../services/GenerateJwtToken');
 
@@ -6,7 +6,7 @@ function createLogin(req, res) {
   res.render('layout', {
     content: 'auth/login',
     messages: req.flash('messageBag'),
-    isGuest:req.isGuest,
+    isGuest: req.isGuest,
     user: req.user,
   });
 }
@@ -22,15 +22,13 @@ async function storeLogin(req, res) {
       maxAge: jwt.maxAge,
     });
 
-    res.status(200)
-      .json({
-        success: true,
-        message: 'User logged in successfully',
-      });
+    res.status(200).json({
+      success: true,
+      message: 'User logged in successfully',
+    });
   } catch (error) {
     console.error('storeLogin error', error);
-    res.status(401)
-      .json({success: false, message: error.message});
+    res.status(401).json({ success: false, message: error.message });
   }
 }
 

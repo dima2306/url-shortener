@@ -2,11 +2,11 @@ const ejs = require('ejs');
 const helpers = require('../helpers/helper');
 const shortenUrlService = require('../services/ShortenUrlService');
 const UrlModel = require('../models/Url');
-const {getTodayDate} = require('../helpers/helper');
+const { getTodayDate } = require('../helpers/helper');
 const flashMessageRenderer = require('../helpers/flashMessageRenderer');
 
 async function store(req, res) {
-  const {originalUrl, expiration, visibility} = req.body;
+  const { originalUrl, expiration, visibility } = req.body;
 
   try {
     if (helpers.isObjectEmpty(req.body)) {
@@ -16,7 +16,12 @@ async function store(req, res) {
           message: 'Request is empty. Please fill the required fields.',
         },
       ];
-      const response = await flashMessageRenderer(req, errorMessage, 400, 'error');
+      const response = await flashMessageRenderer(
+          req,
+          errorMessage,
+          400,
+          'error',
+      );
       return res.status(response.code).json(response);
     }
 
@@ -27,7 +32,12 @@ async function store(req, res) {
           message: 'Original URL is required.',
         },
       ];
-      const response = await flashMessageRenderer(req, errorMessage, 400, 'error');
+      const response = await flashMessageRenderer(
+          req,
+          errorMessage,
+          400,
+          'error',
+      );
       return res.status(response.code).json(response);
     }
 
@@ -39,7 +49,12 @@ async function store(req, res) {
         },
       ];
 
-      const response = await flashMessageRenderer(req, errorMessage, 400, 'error');
+      const response = await flashMessageRenderer(
+          req,
+          errorMessage,
+          400,
+          'error',
+      );
       return res.status(response.code).json(response);
     }
 
@@ -66,8 +81,8 @@ async function store(req, res) {
     return res.status(response.code).json(response);
   } catch (err) {
     console.error(err);
-    return res.status(500)
-        .json({type: 'error', message: 'Internal Server Error'});
+    return res.status(500).
+        json({ type: 'error', message: 'Internal Server Error' });
   }
 }
 
