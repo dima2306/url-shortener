@@ -1,4 +1,3 @@
-const ejs = require('ejs');
 const helpers = require('../helpers/helper');
 const shortenUrlService = require('../services/ShortenUrlService');
 const UrlModel = require('../models/Url');
