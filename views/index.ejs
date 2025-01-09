@@ -105,6 +105,21 @@
     </div>
 </form>
 
+<div id="shortenedUrlBlock" class="container mx-auto max-w-screen-lg hidden">
+    <div class="mb-6 rounded bg-white px-6 py-6 shadow-2xl md:p-8">
+        <p>Here's your shortened URL:
+            <a href="#" target="_blank" rel="noreferrer"
+               class="text-blue-700 hover:text-blue-400 hover:underline">
+                URL
+            </a>
+        </p>
+        <% if (isGuest) { %>
+            <small class="italic">Psst! Because you're not logged in, it's displayed only once.</small>
+        <% } %>
+        <small>It will be automatically expired after x days.</small>
+    </div>
+</div>
+
 <script>
   let form = document.querySelector('form');
   const output = document.querySelector('output');
@@ -119,8 +134,26 @@
       method: 'POST',
       body: params,
     }).then(response => response.json()).then(response => {
+      let expiration = 0;
       let selector = document.querySelector('.alert__messages');
       selector.insertAdjacentHTML('beforebegin', response.data);
+      if (response.type === 'success' && response.url) {
+        const shortenedUrlBlock = document.getElementById('shortenedUrlBlock');
+        const now = new Date();
+        const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+
+        shortenedUrlBlock.classList.remove('hidden');
+        expiration = new Date(response.url.expiration);
+
+        if (expiration >= now) {
+          expiration = rtf.format(Math.floor((expiration - now) / 86400000), 'day');
+          shortenedUrlBlock.querySelector('a').href = response.url.shortenedUrl;
+          shortenedUrlBlock.querySelector('a').textContent = window.location.origin + '/' + response.url.shortenedUrl;
+        }
+
+        const lastSmallTag = shortenedUrlBlock.querySelector('small:last-child');
+        lastSmallTag.textContent = lastSmallTag.textContent.replace('after x days', `${expiration}`);
+      }
     }).catch(err => console.error(err));
   });
 

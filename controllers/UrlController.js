@@ -78,6 +78,8 @@ async function store(req, res) {
 
     let response = await flashMessageRenderer(req, message, 201, 'success');
 
+    response.url = url;
+
     return res.status(response.code).json(response);
   } catch (err) {
     console.error(err);
