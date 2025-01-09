@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
 
 // Create a virtual field to get all the URLs of a user
 userSchema.virtual('urls', {
-  ref: 'Url',
+  ref: 'URL',
   localField: '_id',
   foreignField: 'user',
 });
