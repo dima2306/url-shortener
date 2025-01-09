@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const Url = require('./Url');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -27,9 +28,22 @@ const userSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
+// Create a virtual field to get all the URLs of a user
+userSchema.virtual('urls', {
+  ref: 'Url',
+  localField: '_id',
+  foreignField: 'user',
+});
+
 userSchema.pre('save', async function(next) {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
+
+  next();
+});
+
+userSchema.pre('remove', async function(next) {
+  await Url.deleteMany({ user: this._id });
 
   next();
 });
