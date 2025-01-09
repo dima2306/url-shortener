@@ -27,6 +27,16 @@
                                 ><%= url.shortenedUrl; %>
                                 </a>
                             </p>
+                            <p class="text-gray-800"><strong>Expiration:</strong>
+                                <% if(url.expiration < new Date()) { %>
+                                    <span class="text-red-500">Expired</span>
+                                <% } else { %>
+                                    <time datetime="<%= new Date(url.expiration).toISOString(); %>"
+                                          title="<%= new Date(url.expiration).toISOString(); %>">
+                                        <%= new Date(url.expiration).toDateString(); %>
+                                    </time>
+                                <% } %>
+                            </p>
                         </li>
                     <% }); %>
                 <% } else { %>
