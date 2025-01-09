@@ -1,0 +1,38 @@
+<div class="container mx-auto p-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white p-6 rounded-lg shadow-md md:col-span-1">
+            <h2 class="text-xl font-bold mb-4">Your Profile</h2>
+            <p class="text-gray-700"><strong>Name:</strong> <%= user.name; %></p>
+            <p class="text-gray-700"><strong>Name:</strong> <%= user.surname; %></p>
+            <p class="text-gray-700"><strong>Email:</strong> <%= user.email; %></p>
+            <p class="text-gray-700"><strong>Joined:</strong> <%= user.createdAt.toDateString(); %></p>
+            <p class="text-gray-700"><strong>Shortened URLs:</strong> <%= user.urls.length; %></p>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-md md:col-span-2">
+            <h2 class="text-xl font-bold mb-4">Your URLs</h2>
+            <ul class="space-y-2">
+                <% if (user.urls.length > 0) { %>
+                    <% user.urls.forEach(url => { %>
+                        <li class="bg-gray-200 p-4 rounded-md">
+                            <p class="text-gray-800"><strong>Original URL:</strong>
+                                <a href="<%= url.originalUrl; %>" target="_blank"
+                                   class="text-blue-500 hover:underline"
+                                ><%= url.originalUrl; %>
+                                </a>
+                            </p>
+                            <p class="text-gray-800"><strong>Short URL:</strong>
+                                <a href="<%= url.shortenedUrl; %>" target="_blank"
+                                   class="text-blue-500 hover:underline"
+                                ><%= url.shortenedUrl; %>
+                                </a>
+                            </p>
+                        </li>
+                    <% }); %>
+                <% } else { %>
+                    <li class="text-gray-600">No URLs created yet.</li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</div>

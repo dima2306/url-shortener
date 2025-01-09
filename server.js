@@ -16,6 +16,7 @@ const helpers = require('./helpers/helper');
 const urlRoutes = require('./routes/urlRoutes');
 const authRoutes = require('./routes/authRoutes');
 const contactRoutes = require('./routes/contactRoutes');
+const profileRoutes = require('./routes/profileRoutes');
 
 const PORT = Number.parseInt(process.env.PORT) || 3000;
 const app = express();
@@ -82,6 +83,7 @@ app.get('/', (req, res) => {
 app.use('/url', urlRoutes);
 app.use('/auth', authRoutes);
 app.use('/contact', contactRoutes);
+app.use('/profile', profileRoutes);
 
 app.get('/about', (req, res) => {
   res.render('layout', {
