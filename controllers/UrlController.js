@@ -63,6 +63,7 @@ async function store(req, res) {
       shortenedUrl,
       expiration: expiration ? new Date(expiration) : null,
       visibility: visibility === 'on',
+      user: req.user?._id,
     };
 
     const url = new UrlModel(urlData);
