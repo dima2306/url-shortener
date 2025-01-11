@@ -108,19 +108,3 @@ app.get('/terms-and-conditions', (req, res) => {
     user: req.user,
   });
 });
-
-app.get('/set-cookies', (req, res) => {
-  res.cookie('guest', true, {
-    maxAge: 60000,
-    expires: new Date(Date.now() + 60000),
-    // httpOnly: true,
-  }).send('cookie set');
-});
-
-app.get('/get-cookies', (req, res) => {
-  const cookies = req.cookies;
-
-  console.log(cookies);
-
-  res.json(cookies);
-});
