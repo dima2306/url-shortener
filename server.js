@@ -99,8 +99,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
-app.use(authMiddleware);
-
 app.get('/terms-and-conditions', (req, res) => {
   res.render('layout', {
     content: 'terms_conditions',
@@ -108,3 +106,6 @@ app.get('/terms-and-conditions', (req, res) => {
     user: req.user,
   });
 });
+
+// All routes below this middleware will require authentication
+app.use(authMiddleware);
