@@ -9,12 +9,12 @@ const inputErrorClasses = 'bg-red-50 border-red-500 text-red-900 placeholder-red
 
         <%- include('_partials/validationErrors', errors) %>
 
-        <% if (messages.length > 0) { %>
-            <%- include('_partials/flash_message', messages) %>
-        <% } %>
-
         <div class="grid grid-flow-row md:grid-cols-2 grid-rows-2 gap-5">
             <form method="POST">
+                <% if (messages.length > 0) { %>
+                    <%- include('_partials/flash_message', messages) %>
+                <% } %>
+
                 <div class="mb-4">
                     <label for="name"
                            class="block text-sm font-medium
