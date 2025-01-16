@@ -12,7 +12,8 @@ router.get('/', (req, res) => {
     content: 'contact',
     isGuest: req.isGuest,
     user: req.user,
-    errors: [],
+    messages: req.flash('messageBag'),
+    errors: req.flash('errors') ?? [],
     oldInput: {},
   });
 });
