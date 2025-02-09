@@ -11,4 +11,6 @@ const upload = multer();
 // The processed data is stored in req.body.
 router.post('/create', upload.none(), UrlController.store);
 
+router.get('/redirect/:shortUrl', UrlController.redirect);
+
 module.exports = router;

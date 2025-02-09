@@ -111,6 +111,32 @@ async function store(req, res) {
   }
 }
 
+async function redirect(req, res) {
+  const { shortUrl } = req.params;
+
+  try {
+    const existingDocument = await UrlModel.findOne({ shortenedUrl: shortUrl }).exec();
+
+    if (existingDocument === null) {
+      return res.status(404).json({ type: 'error', message: 'URL not found' });
+    }
+
+    if (existingDocument.expiration && existingDocument.expiration < new Date()) {
+      return res.status(410).json({ type: 'error', message: 'URL has expired' });
+    }
+
+    if (!existingDocument.visibility) {
+      return res.status(403).json({ type: 'error', message: "URL can't be redirected" });
+    }
+
+    return res.redirect(302, existingDocument.originalUrl);
+  } catch (err) {
+    console.error('urlController.redirect', err);
+    return res.status(500).json({ type: 'error', message: 'Internal Server Error' });
+  }
+}
+
 module.exports = {
   store,
+  redirect,
 };
