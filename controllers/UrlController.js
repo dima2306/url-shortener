@@ -66,6 +66,29 @@ async function store(req, res) {
       user: req.user?._id,
     };
 
+    let existingDocument = await UrlModel.findOne({
+      originalUrl: urlData.originalUrl,
+      expiration: urlData.expiration,
+    }).exec();
+
+    if (existingDocument) {
+      const message = [
+        {
+          type: 'warning',
+          message: `URL already exists.
+            Here's the shortened <a class="underline text-blue-600" href="/${existingDocument.shortenedUrl}">URL</a>`,
+        },
+      ];
+      const response = await flashMessageRenderer(
+          req,
+          message,
+          302,
+          'warning',
+      );
+
+      return res.status(response.code).json(response);
+    }
+
     const url = new UrlModel(urlData);
     await url.save();
 
