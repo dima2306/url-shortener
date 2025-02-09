@@ -19,10 +19,6 @@ async function storeContact(req, res) {
   }).catch(error => {
     console.error('storeContact error:', error);
 
-    if (error.code === 11000) {
-      error.msg = 'Email already exists';
-    }
-
     req.flash('errors', [
       {
         type: 'danger',
