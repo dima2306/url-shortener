@@ -14,6 +14,13 @@ const postSchema = new mongoose.Schema({
     minLength: 3,
     maxLength: 100,
   },
+  slug: {
+    type: String,
+    required: true,
+    unique: true,
+    minLength: 3,
+    maxLength: 100,
+  },
   cover: {
     type: String,
     required: true,
