@@ -1,6 +1,7 @@
 'use strict'
 
 const mongoose = require('mongoose')
+const { slugify } = require('../helpers/helper');
 
 const postSchema = new mongoose.Schema({
   user: {
@@ -34,6 +35,12 @@ const postSchema = new mongoose.Schema({
     maxLength: 500,
   },
 }, { timestamps: true });
+
+postSchema.pre('validate', function(next) {
+  this.slug = slugify(this.title);
+
+  next();
+});
 
 const postModel = mongoose.model('Post', postSchema);
 
