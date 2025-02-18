@@ -45,6 +45,12 @@ module.exports = {
     return localDate.toISOString().split('T')[0]; // Return in YYYY-MM-DD format
   },
 
+  /**
+   * Function to slugify a string
+   *
+   * @param string
+   * @returns {string}
+   */
   slugify: function(string) {
     return string
         .toString()
