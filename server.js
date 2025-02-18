@@ -17,6 +17,7 @@ const urlRoutes = require('./routes/urlRoutes');
 const authRoutes = require('./routes/authRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const profileRoutes = require('./routes/profileRoutes');
+const blogRoutes = require('./routes/blogRoutes');
 
 const PORT = Number.parseInt(process.env.PORT) || 3000;
 const app = express();
@@ -84,6 +85,7 @@ app.use('/url', urlRoutes);
 app.use('/auth', authRoutes);
 app.use('/contact', contactRoutes);
 app.use('/profile', profileRoutes);
+app.use('/blog', blogRoutes);
 
 app.get('/about', (req, res) => {
   res.render('layout', {
