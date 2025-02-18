@@ -14,8 +14,25 @@ async function index(req, res) {
   });
 }
 
-function show() {
+async function show(req, res) {
+  const post = await PostModel.findOne({ slug: req.params.slug});
 
+  if (! post) {
+    return res.render('layout', {
+      content: '404',
+      messages: [],
+      isGuest: req.isGuest,
+      user: req.user?._id,
+    });
+  }
+
+  res.render('layout', {
+    content: 'blog/show',
+    messages: [],
+    isGuest: req.isGuest,
+    user: req.user?._id,
+    post,
+  });
 }
 
 module.exports = {
