@@ -1,6 +1,7 @@
 'use strict';
 
 const PostModel = require('../models/Post');
+const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
 async function index(req, res) {
   const posts = await PostModel.getAllRecords();
@@ -16,6 +17,7 @@ async function index(req, res) {
 
 async function show(req, res) {
   const post = await PostModel.findOne({ slug: req.params.slug});
+  post.formattedUpdatedAt = post.updatedAt.toLocaleDateString('en-US', dateOptions);
 
   if (! post) {
     return res.render('layout', {
