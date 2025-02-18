@@ -5,6 +5,9 @@ const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
 async function index(req, res) {
   const posts = await PostModel.getAllRecords();
+  posts.forEach(post => post.formattedUpdatedAt =
+      post.updatedAt.toLocaleDateString('en-US', dateOptions)
+  );
 
   res.render('layout', {
     content: 'blog/index',
