@@ -42,6 +42,15 @@ postSchema.pre('validate', function(next) {
   next();
 });
 
+postSchema.statics.getAllRecords = async function() {
+  try {
+    return await this.find().sort({ createdAt: -1 });
+  } catch (error) {
+    console.log('postSchema.statics.getAllRecords', error);
+    throw new Error(error);
+  }
+};
+
 const postModel = mongoose.model('Post', postSchema);
 
 module.exports = postModel;
