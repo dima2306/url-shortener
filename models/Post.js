@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const { slugify } = require('../helpers/helper');
 
 const postSchema = new mongoose.Schema({
