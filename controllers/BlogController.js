@@ -4,8 +4,11 @@ const PostModel = require('../models/Post');
 const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
 async function index(req, res) {
-  const posts = await PostModel.getAllRecords();
-  posts.forEach(post => post.formattedUpdatedAt =
+  const paginator = await PostModel.paginate({
+    currentPage: Number.parseInt(req.query.page) || 1,
+  });
+
+  paginator.items.forEach(post => post.formattedUpdatedAt =
       post.updatedAt.toLocaleDateString('en-US', dateOptions)
   );
 
@@ -14,7 +17,7 @@ async function index(req, res) {
     messages: req.flash('messageBag'),
     isGuest: req.isGuest,
     user: req.user?._id,
-    posts,
+    paginator,
   });
 }
 

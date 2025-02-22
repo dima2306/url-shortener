@@ -8,7 +8,7 @@
         </p>
     </div>
     <ul class="divide-y divide-gray-200 dark:divide-gray-600">
-        <% posts.forEach(post => { %>
+        <% paginator.items.forEach(post => { %>
             <li class="py-12">
                 <article>
                     <div class="space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0">
@@ -50,4 +50,7 @@
             </li>
         <% }); %>
     </ul>
+    <div class="pt-10">
+        <%- include('../_partials/pagination', paginator) %>
+    </div>
 </div>
