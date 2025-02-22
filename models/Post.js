@@ -51,6 +51,58 @@ postSchema.statics.getAllRecords = async function() {
   }
 };
 
+postSchema.statics.paginate = async function(options = {}) {
+  const { currentPage = 1, limit = 10 } = options;
+
+  try {
+    const posts = await this.aggregate([
+      { $sort: { updatedAt: -1 } },
+      // { $skip: (currentPage - 1) * limit },
+      // { $limit: limit },
+    ]).exec();
+
+    const total = posts.length;
+    const totalPages = Math.ceil(total / limit);
+    const startPage = (currentPage - 1) * limit + 1;
+    const endPage = startPage + limit;
+    const paginatedItems = posts.slice(startPage, endPage);
+    const hasNextPage = currentPage < totalPages;
+    const hasPrevPage = currentPage > 1;
+    const nextPage = hasNextPage ? currentPage + 1 : null;
+    const prevPage = hasPrevPage ? currentPage - 1 : null;
+
+    return {
+      currentPage,
+      limit,
+      total,
+      totalPages,
+      items: paginatedItems,
+      hasNextPage,
+      hasPrevPage,
+      nextPage,
+      prevPage,
+      onFirstPage: currentPage <= 1,
+      hasPages: totalPages > 1,
+      generateLinks: baseUrl => {
+        const links = {};
+
+        if (hasPrevPage) {
+          links.previous = `${baseUrl}?page=${prevPage}`;
+        }
+        if (hasNextPage) {
+          links.next = `${baseUrl}?page=${nextPage}`;
+        }
+
+        return links;
+      },
+
+    }
+  } catch (error) {
+    console.log('postSchema.statics.paginate', error);
+    throw new Error(error);
+  }
+};
+
 const postModel = mongoose.model('Post', postSchema);
 
 module.exports = postModel;
