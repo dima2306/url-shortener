@@ -1,0 +1,26 @@
+<% if (paginator.hasPages ) { %>
+    <div class="flex space-x-1 justify-center">
+        <% if (paginator.onFirstPage) { %>
+            <button class="cursor-not-allowed rounded-md border border-slate-500 py-2 px-3 text-sm text-slate-600">
+                Prev
+            </button>
+        <% } else { %>
+            <a href="<%= paginator.generateLinks('/blog').previous %>" rel="prev"
+               class="rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-lg text-slate-400 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800">
+                Prev
+            </a>
+        <% } %>
+
+        <% if (paginator.hasNextPage) { %>
+            <a href="<%= paginator.generateLinks('/blog').next %>" rel="next"
+               class="min-w-9 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-lg text-slate-400 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800">
+                Next
+            </a>
+        <% } else { %>
+            <button class="cursor-not-allowed min-w-9 rounded-md border border-slate-500 py-2 px-3 text-sm text-slate-600">
+                Next
+            </button>
+        <% } %>
+
+    </div>
+<% } %>
