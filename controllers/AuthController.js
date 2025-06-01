@@ -22,7 +22,7 @@ async function storeLogin(req, res) {
       maxAge: jwt.maxAge,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: 'User logged in successfully',
     });
