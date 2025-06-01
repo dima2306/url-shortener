@@ -28,7 +28,6 @@ async function storeLogin(req, res) {
     });
   } catch (error) {
     console.error('storeLogin error', error);
-    res.status(401).json({ success: false, message: error.message });
   }
 }
 
