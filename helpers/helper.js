@@ -44,4 +44,28 @@ module.exports = {
 
     return localDate.toISOString().split('T')[0]; // Return in YYYY-MM-DD format
   },
+
+  /**
+   * Function to slugify a string
+   *
+   * @param string
+   * @returns {string}
+   */
+  slugify: function(string) {
+    return string
+        .toString()
+        .normalize('NFD') // Normalize to decompose combined characters
+        .replace(/[\u0300-\u036f]/g, '') // Remove diacritics (accents)
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-') // Replace spaces with a single hyphen
+        .replace(/-+/g, '-') // Replace multiple hyphens with a single hyphen
+        .replace(/^-+|-+$/g, '') // Trim hyphens from start and end
+        .replace(/[^a-z0-9 -]/g, '') // Remove invalid characters
+        .replace(/&/g, '-and-') // Replace & with 'and'
+        .replace(/@/g, 'at') // Replace @ with 'at'
+        .replace(/#/g, 'number') // Replace # with 'number'
+        .replace(/\$/g, 'dollar') // Replace $ with 'dollar'
+        ;
+  },
 };
